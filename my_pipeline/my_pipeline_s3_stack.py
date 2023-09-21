@@ -1,3 +1,4 @@
+import aws_cdk as cdk
 from constructs import Construct
 from aws_cdk import (
     Duration,
@@ -10,29 +11,29 @@ class S3Stack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # S3
-        bucket = s3.Bucket(self, 'source-images',
+        bucket_source_images = s3.Bucket(self, 'source-images',
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            removal_policy=RemovalPolicy.RETAIN,
+            removal_policy=cdk.RemovalPolicy.RETAIN,
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
-            )
+        )
 
-        bucket = s3.Bucket(self, 'scripts',
+        bucket_scripts = s3.Bucket(self, 'scripts',
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            removal_policy=RemovalPolicy.RETAIN,
+            removal_policy=cdk.RemovalPolicy.RETAIN,
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
-            )
+        )
 
         bucket = s3.Bucket(self, 'configs',
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            removal_policy=RemovalPolicy.RETAIN,
+            removal_policy=cdk.RemovalPolicy.RETAIN,
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
-            )
+        )
