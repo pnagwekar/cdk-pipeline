@@ -15,7 +15,6 @@ class S3Stack(Stack):
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             removal_policy=cdk.RemovalPolicy.RETAIN,
-            auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
         )
@@ -24,7 +23,6 @@ class S3Stack(Stack):
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             removal_policy=cdk.RemovalPolicy.RETAIN,
-            auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
         )
@@ -33,7 +31,7 @@ class S3Stack(Stack):
             encryption=s3.BucketEncryption.KMS,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             removal_policy=cdk.RemovalPolicy.RETAIN,
-            auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
         )
+
