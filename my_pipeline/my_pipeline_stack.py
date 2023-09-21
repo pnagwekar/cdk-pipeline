@@ -1,6 +1,7 @@
 import aws_cdk as cdk
 from constructs import Construct
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+from my_pipeline.my_pipeline_app_stage import MyPipelineAppStage
 
 class MyPipelineStack(cdk.Stack):
 
@@ -16,3 +17,5 @@ class MyPipelineStack(cdk.Stack):
                                 "cdk synth"]
                         )
                     )
+        pipeline.add_stage(MyPipelineAppStage(self, "test",
+            env=cdk.Environment(account="299344511603", region="us-west-2")))
