@@ -17,6 +17,7 @@ class S3Stack(Stack):
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
+            )
 
         bucket = s3.Bucket(self, 'scripts',
             encryption=s3.BucketEncryption.KMS,
@@ -25,6 +26,7 @@ class S3Stack(Stack):
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
+            )
 
         bucket = s3.Bucket(self, 'configs',
             encryption=s3.BucketEncryption.KMS,
@@ -33,4 +35,4 @@ class S3Stack(Stack):
             auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             enforce_ssl=True,
-
+            )
