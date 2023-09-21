@@ -19,7 +19,7 @@ class MyPipelineStack(cdk.Stack):
                         )
                     )
 
-        testing_stage = pipeline.add_stage(MyPipelineAppStage(self, "testing",
-            env=cdk.Environment(account="299344511603", region="us-west-2")))
+        testing_stage = pipeline.add_stage(MyPipelineAppStage(self, "infrastructure-Deploy",
+            env=cdk.Environment(account="299344511603", region="us-east-1")))
 
         testing_stage.add_post(ManualApprovalStep('approval'))
