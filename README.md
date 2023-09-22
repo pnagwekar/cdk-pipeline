@@ -45,19 +45,19 @@
   -  `aws s3 ls`
 
 ### You can skip all of the above if you are using your laptop (mac) and perform the followings
-### 1) Install Node.js 
+#### 1) Install Node.js 
   - `npm install -g n`
   - `node --version`
   - `sudo n latest`
   - `node --version`
 
-### 2) Install the AWS CDK Toolkit (the cdk command):
+#### 2) Install the AWS CDK Toolkit (the cdk command):
   - `npm install -g aws-cdk`
   - `cdk --version`
   - `brew install awscli`
 
 ## ------------------------------
-
+### Continue from here in both the cases (EC2 instance or Laptop)
 #### 1) configure git
 
 - `git config --global user.name "Your Name"`
@@ -95,5 +95,3 @@
   - `git commit -m "initial commit"`
   - `git push`
   - `cdk deploy`
-
-
