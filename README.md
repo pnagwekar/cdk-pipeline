@@ -1,58 +1,99 @@
+# Welcome to your CDK pipeline project with Python
 
-# Welcome to your CDK Python project!
+### 1) Start with Ubuntu instance in AWS. Instance profile with AdministrativeAccess policy.
+- `sudo apt update && sudo apt upgrade -y`
+- restart ec2 instance
+- `sudo apt remove awscli -y`
+- `sudo apt autoclean && sudo apt autoremove -y`
+- `sudo apt-get install build-essential procps curl file git zsh -y`
+- set zsh as default shell
+  - `chsh -s $(which zsh)`
+  - verify zsh is configured as default
+    - `dpkg -l zsh`
+    - `grep $USER /etc/passwd`
+    - `grep zsh /etc/shells`
+- relogin to ec2 instance
+- verify current shell is zsh
+  - `echo $0`
+- install oh-my-zsh
+  - https://ohmyz.sh/#install
+  - `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+- edit `.zshrc`
+  - adjust preferred theme (eg `mh`)
+  - ensure `plugins=(git)`
 
-This is a blank project for CDK development with Python.
+#### 2) install node version manager and node lts
+- https://github.com/nvm-sh/nvm
+- `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`
+- restart shell or try `source ~./zshrc`
+- verify nvm is installed
+  - `nvm --version`
+- install node lts
+  - `nvm install --lts`
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+#### 3) install homebrew
+- from https://brew.sh/
+  - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+  - `(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/ubuntu/.zshrc`
+  - `eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"`
+- verify brew is working
+  - `brew doctor`
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+#### 4)Install aws-cli
+- ensure aws-cli is installed
+  - `brew install awscli`
+  -  `aws s3 ls`
 
-To manually create a virtualenv on MacOS and Linux:
+### You can skip all of the above if you are using your laptop (mac) and perform the followings
+### 1) Install Node.js 
+  - `npm install -g n`
+  - `node --version`
+  - `sudo n latest`
+  - `node --version`
 
-```
-$ python3 -m venv .venv
-```
+### 2) Install the AWS CDK Toolkit (the cdk command):
+  - `npm install -g aws-cdk`
+  - `cdk --version`
+  - `brew install awscli`
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+## ------------------------------
 
-```
-$ source .venv/bin/activate
-```
+#### 1) configure git
 
-If you are a Windows platform, you would activate the virtualenv like this:
+- `git config --global user.name "Your Name"`
+- `git config --global user.email "your.email@email.com"`
+- can also do additional configs like alias
 
-```
-% .venv\Scripts\activate.bat
-```
+#### 2) setup git 
 
-Once the virtualenv is activated, you can install the required dependencies.
+- `brew install git-remote-codecommit`
+- `brew install git-secrets`
+  - local repo setup
+    - `cd /path/to/my/repo`
+    - `git secrets --install`
+    - `git secrets --register-aws`
+  - global
+    - `git secrets --register-aws --global`
+    - `git secrets --install ~/.git-templates/git-secrets`
+    - `git config --global init.templateDir ~/.git-templates/git-secrets`
 
-```
-$ pip install -r requirements.txt
-```
+#### 3) CDK bootstrap
 
-At this point you can now synthesize the CloudFormation template for this code.
+  - `git clone https://github.com/pnagwekar/cdk-pipeline.git my_pipeline`
+  - `cd my_pipeline`
+  - `mkdir bootstrap && cd bootstrap`
+  - `npx cdk@2 bootstrap --trust 12345678910 aws://12345678910/us-east-1 --cloudformation-execution-policies "arn:aws:iam::aws:policy/AdministratorAccess"`
+  - `cd .. && rm -rf bootstrap`
 
-```
-$ cdk synth
-```
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
+#### 4) install dependencies
+  - `source .venv/bin/activate # Enter your isolated python env`
+  - `pip install -r requirements.txt # Install required python modules`
 
-## Useful commands
+#### 5) deploy a pipeline manually once
+  - `git add --all`
+  - `git commit -m "initial commit"`
+  - `git push`
+  - `cdk deploy`
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
 
-Enjoy!

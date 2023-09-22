@@ -5,6 +5,9 @@ import aws_cdk as cdk
 
 from my_pipeline.my_pipeline_stack import MyPipelineStack
 
+repoName = self.node.try_get_context("repoName")
+dev_info = self.node.try_get_context("dev")
+
 
 app = cdk.App()
 MyPipelineStack(app, "MyPipelineStack",
@@ -23,6 +26,9 @@ MyPipelineStack(app, "MyPipelineStack",
     #env=cdk.Environment(account='123456789012', region='us-east-1'),
 
     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    env=cdk.Environment(account="299344511603", region="us-east-1")
+    env=cdk.Environment(account=dev_info["account], region=dev_info["region"]
     )
+)
+
 app.synth()
+

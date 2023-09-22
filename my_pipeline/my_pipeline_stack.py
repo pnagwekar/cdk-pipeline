@@ -10,8 +10,7 @@ class MyPipelineStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         repoName = self.node.try_get_context("repoName")
-        dev_account = self.node.try_get_context("dev.account")
-        dev_region = self.node.try_get_context("dev.region")
+        dev_info = self.node.try_get_context("dev")
 
         pipeline =  CodePipeline(self, "Pipeline",
                         pipeline_name="CDKPipeline",
@@ -19,12 +18,9 @@ class MyPipelineStack(cdk.Stack):
                             input=CodePipelineSource.git_hub(repoName, "main"),
                             commands=["npm install -g aws-cdk",
                                 "python -m pip install -r requirements.txt",
-                                "cdk synth"]
-                        )
-                    )
+                                "cdk synth"]))
 
         testing_stage = pipeline.add_stage(MyPipelineAppDevStage(self, "infrastructure-Deploy",
-            env=cdk.Environment(account=dev_account, region=dev_region)))
+            env=cdk.Environment(account=dev_info["account"], region=dev_info["region"])))
 
         testing_stage.add_post(ManualApprovalStep('approval'))
-
