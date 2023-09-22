@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 import os
-
 import aws_cdk as cdk
-
 from my_pipeline.my_pipeline_stack import MyPipelineStack
 
-repoName = self.node.try_get_context("repoName")
-dev_info = self.node.try_get_context("dev")
-
-
 app = cdk.App()
+repoName = app.node.try_get_context("repoName")
+dev_info = app.node.try_get_context("dev")
+
 MyPipelineStack(app, "MyPipelineStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
